@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+  application:
+    container_name: application
+    build: ./flask-app
+    ports:
+    - target: 5000
+      published: 5000
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    depends_on:
+    - application
+    volumes:
+    - type: bind
+      source: ./nginx/nginx.conf
+      target: /etc/nginx/nginx.conf
+  database:
+    container_name: database
+    build: ./db
+    depends_on:
+    - application
