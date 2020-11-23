@@ -5,7 +5,7 @@ FROM mysql:5.7
 ENV MYSQL_DATABASE=myAppDB
 
 # Add the content of the .sql file to your image
-COPY ./CreateTable.sql docker-entrypoint-initdb.d/
+COPY CreateTable.sql docker-entrypoint-initdb.d/
 
 # All scripts in docker-entrypoint-initdb.d/ are automatically
 # executed during container startup

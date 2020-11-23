@@ -5,12 +5,13 @@ FROM python:3.7
 RUN apt update
 RUN apt install python3-pip -y
  
-# Copy contents into image
-COPY . .
- 
 # run pip dependencies
 RUN pip install flask
 RUN pip install flask_sqlalchemy
+RUN pip install pymysql
+
+#Copy neccecery files
+COPY . .
  
 # Expose correct port
 EXPOSE 80

@@ -5,7 +5,10 @@ services:
     build: ./flask-app
     ports:
     - target: 5000
-      published: 5000
+    depends_on:
+    - database
+    environment:
+      MYSQL_ROOT_PASSWORD: ${PASSWORD}
   nginx:
     container_name: nginx
     image: nginx:latest
@@ -15,8 +18,20 @@ services:
     - type: bind
       source: ./nginx/nginx.conf
       target: /etc/nginx/nginx.conf
+    ports:
+    - target: 80
+      published: 80
   database:
     container_name: database
     build: ./db
-    depends_on:
-    - application
+    ports:
+    - target: 3306
+      published: 3306
+    volumes:
+    - type: volume
+      source: db_users
+      target: /var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${PASSWORD}
+volumes:
+  db_users:
