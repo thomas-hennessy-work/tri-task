@@ -1,16 +1,16 @@
 version: "3.7"
 services:
   application:
-    container_name: application
-    build: ./flask-app
+    image: thomashennessy/triotaskapp
     ports:
     - target: 5000
     depends_on:
     - database
     environment:
       MYSQL_ROOT_PASSWORD: ${PASSWORD}
+    deploy:
+      replicas: 4
   nginx:
-    container_name: nginx
     image: nginx:latest
     depends_on:
     - application
@@ -22,8 +22,7 @@ services:
     - target: 80
       published: 80
   database:
-    container_name: database
-    build: ./db
+    image: thomashennessy/triotaskdatabase
     ports:
     - target: 3306
       published: 3306
